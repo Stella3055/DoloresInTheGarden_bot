@@ -3,12 +3,7 @@ import telepot
 from pprint import pprint
 from telepot.loop import MessageLoop
 
-try:
-    with open("token") as tokenFile:
-        TOKEN = tokenFile.read()
-except:
-    print("Token file not set yet!")
-
+TOKEN = os.environ["TOKEN"]
 
 bot = telepot.Bot(TOKEN)
 pprint(bot.getMe())
