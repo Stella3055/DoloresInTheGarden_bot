@@ -1,1 +1,1 @@
-web: python -m flask run 
+web: gunicorn bot:app --log-file -
