@@ -1,11 +1,8 @@
 from telegram.ext import Updater, CommandHandler
 import os
 
-
 # 設定一些個人的環境變數
-# TOKEN = os.environ["TOKEN"]
-TOKEN = "1305894368:AAFJLlTmfB58_xmkR-HGz4NRo9o1kDUAy_M"
-PORT = int(os.environ.get('PORT', '8443'))
+TOKEN = os.environ["TOKEN"]
 
 
 updater = Updater(token=TOKEN)  # 呼叫 bot 用
@@ -35,12 +32,7 @@ def hello(bot, update):
 updater.dispatcher.add_handler(CommandHandler('start', welcome))  # 歡迎訊息
 updater.dispatcher.add_handler(CommandHandler('hi', hello))  # Hello World!
 
-
-# 執行機器人必須要的，讓機器人運作聽命
-#updater.start_polling()
-# 改用 webhook 的方式
 updater.start_webhook(listen="0.0.0.0",
-                      port=PORT,
                       url_path=TOKEN)
 updater.bot.set_webhook("https://dolores-in-the-garden-bot.herokuapp.com/" + TOKEN)
 updater.idle()
