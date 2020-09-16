@@ -4,6 +4,7 @@ from telegram.ext import Dispatcher, MessageHandler, Filters
 import os
 
 TOKEN = os.environ["TOKEN"]
+PORT = int(os.environ.get('PORT', '5000'))
 bot = telegram.Bot(token=TOKEN)
 app = Flask(__name__)
 
@@ -33,4 +34,4 @@ dispatcher.add_handler(MessageHandler(Filters.text, reply_handler))
 
 if __name__ == "__main__":
     # Running server
-    app.run(debug=True)
+    app.run(port = PORT)
