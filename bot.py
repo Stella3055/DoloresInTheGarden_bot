@@ -34,4 +34,4 @@ dispatcher.add_handler(MessageHandler(Filters.text, reply_handler))
 
 if __name__ == "__main__":
     # Running server
-    app.run(port = PORT)
+    app.run(port = PORT, host='0.0.0.0')
