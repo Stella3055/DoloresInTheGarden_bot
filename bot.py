@@ -9,7 +9,7 @@ from module_cmdHandler.cmdHandler import *
 TOKEN = os.environ["TOKEN"]
 PORT = int(os.environ.get('PORT', '5000'))
 
-SENTIMENT_ANALYSIS = False
+SENTIMENT_ANALYSIS = True
 
 bot = telegram.Bot(token=TOKEN)
 app = Flask(__name__)
