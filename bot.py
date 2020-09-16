@@ -7,9 +7,9 @@ TOKEN = os.environ["TOKEN"]
 bot = telegram.Bot(token=TOKEN)
 app = Flask(__name__)
 
-@app.route('/', methods=['POST'])
+@app.route('/hook', methods=['POST'])
 def webhook_handler():
-    """Set route / with POST method will trigger this method."""
+    """Set route /hook with POST method will trigger this method."""
     if request.method == "POST":
         update = telegram.Update.de_json(request.get_json(force=True), bot)
 
