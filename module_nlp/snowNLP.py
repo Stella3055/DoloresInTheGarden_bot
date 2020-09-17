@@ -4,8 +4,9 @@ def sentimentAnalysis(text):
     s = SnowNLP(text)
     sentimentScore = s.sentiments
     reply = ""
-    if sentimentScore > 0.5:
-        reply = "经分析，您的发言包含积极情绪的概率为 %f\n今天也是充满正能量的一天" %sentimentScore
+    if sentimentScore > 0.35:
+        pass
     else:
-        reply = "经分析，您的发言包含积极情绪的概率为 %f\nчрезвычайная комиссия提醒您，网络并非法外之地" %sentimentScore
-    return(reply)
+        reply = "监测到负能量发言(Probability = %f)\n肃反委员会小助手提醒您，网络并非法外之地" %sentimentScore
+    print("[LOG] sentimentScore = %f" %sentimentScore)
+    return reply

@@ -3,13 +3,16 @@ from flask import Flask, request
 from telegram.ext import Dispatcher, MessageHandler, Filters, CommandHandler
 import os
 
+from module_globalVar import globalVar
+globalVar._init()
+
 from module_nlp.snowNLP import *
 from module_cmdHandler.cmdHandler import *
 
 TOKEN = os.environ["TOKEN"]
 PORT = int(os.environ.get('PORT', '5000'))
 
-SENTIMENT_ANALYSIS = True
+globalVar.set_value("SENTIMENT_ANALYSIS", True)
 
 bot = telegram.Bot(token=TOKEN)
 app = Flask(__name__)
@@ -24,25 +27,26 @@ def webhook_handler():
         dispatcher.process_update(update)
     return 'ok'
 
-
 def reply_handler(bot, update):
     """Reply message."""
     text = update.message.text
     user_id = update.message.from_user.id
-    if SENTIMENT_ANALYSIS:
-        update.message.reply_text(sentimentAnalysis(text))
+    if globalVar.get_value("SENTIMENT_ANALYSIS", True):
+        textSenti = sentimentAnalysis(text)
+        if textSenti:
+            update.message.reply_text(textSenti)
     else:
         update.message.reply_text(text)
-
-
 
 # New a dispatcher for bot
 dispatcher = Dispatcher(bot, None)
 
 # Add handler for handling message, there are many kinds of message. For this handler, it particular handle text
 # message.
-dispatcher.add_handler(CommandHandler("sentimentAnalysisStart", sentimentAnalysisStart))
-dispatcher.add_handler(CommandHandler("sentimentAnalysisStop", sentimentAnalysisStop))
+dispatcher.add_handler(CommandHandler("sentiment_analysis_start", sentimentAnalysisStart))
+dispatcher.add_handler(CommandHandler("sentiment_analysis_stop", sentimentAnalysisStop))
+dispatcher.add_handler(CommandHandler("murmur", sendMurmur))
+dispatcher.add_handler(CommandHandler("fetch_music", fetchMusic, pass_args=True))
 dispatcher.add_handler(MessageHandler(Filters.text, reply_handler))
 
 if __name__ == "__main__":
